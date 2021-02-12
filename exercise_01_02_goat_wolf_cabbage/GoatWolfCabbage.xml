@@ -1,0 +1,171 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE nta PUBLIC '-//Uppaal Team//DTD Flat System 1.1//EN' 'http://www.it.uu.se/research/group/darts/uppaal/flat-1_2.dtd'>
+<nta>
+	<declaration>// Place global declarations here.
+chan MoveWolf, MoveGoat, MoveCabbage;
+</declaration>
+	<template>
+		<name x="5" y="5">Man</name>
+		<declaration>// Place local declarations here.
+
+// bools storing if X is on shore 1
+bool wolf_s1 = true;
+bool goat_s1 = true;
+bool cabbage_s1 = true;</declaration>
+		<location id="id0" x="0" y="0">
+			<name x="-25" y="25">Shore1</name>
+		</location>
+		<location id="id1" x="0" y="-153">
+			<name x="-10" y="-187">Shore2</name>
+		</location>
+		<init ref="id0"/>
+		<transition>
+			<source ref="id0"/>
+			<target ref="id1"/>
+			<label kind="guard" x="280" y="-68">cabbage_s1 &amp; (goat_s1 != wolf_s1)</label>
+			<label kind="synchronisation" x="280" y="-85">MoveCabbage!</label>
+			<label kind="assignment" x="280" y="-51">cabbage_s1 = false</label>
+			<nail x="270" y="47"/>
+			<nail x="270" y="-199"/>
+		</transition>
+		<transition>
+			<source ref="id1"/>
+			<target ref="id0"/>
+			<label kind="guard" x="-544" y="-127">!cabbage_s1 &amp; (goat_s1 != wolf_s1)</label>
+			<label kind="synchronisation" x="-399" y="-144">MoveCabbage!</label>
+			<label kind="assignment" x="-425" y="-110">cabbage_s1 = true</label>
+			<nail x="-289" y="-212"/>
+			<nail x="-289" y="34"/>
+		</transition>
+		<transition>
+			<source ref="id0"/>
+			<target ref="id1"/>
+			<label kind="guard" x="-170" y="42">(wolf_s1 != goat_s1) &amp; (goat_s1 != cabbage_s1)</label>
+			<nail x="17" y="-76"/>
+		</transition>
+		<transition>
+			<source ref="id1"/>
+			<target ref="id0"/>
+			<label kind="guard" x="-161" y="-212">(wolf_s1 != goat_s1) &amp; (goat_s1 != cabbage_s1)</label>
+			<nail x="-17" y="-68"/>
+		</transition>
+		<transition>
+			<source ref="id1"/>
+			<target ref="id0"/>
+			<label kind="guard" x="-221" y="-127">!goat_s1</label>
+			<label kind="synchronisation" x="-238" y="-144">MoveGoat!</label>
+			<label kind="assignment" x="-263" y="-110">goat_s1 = true</label>
+			<nail x="-153" y="-136"/>
+			<nail x="-153" y="-25"/>
+		</transition>
+		<transition>
+			<source ref="id1"/>
+			<target ref="id0"/>
+			<label kind="guard" x="-263" y="-76">!wolf_s1 &amp; (goat_s1 != cabbage_s1)</label>
+			<label kind="synchronisation" x="-93" y="-93">MoveWolf!</label>
+			<label kind="assignment" x="-119" y="-59">wolf_s1 = true</label>
+			<nail x="-86" y="-106"/>
+			<nail x="-86" y="-38"/>
+		</transition>
+		<transition>
+			<source ref="id0"/>
+			<target ref="id1"/>
+			<label kind="guard" x="25" y="-93">wolf_s1 &amp; (goat_s1 != cabbage_s1)</label>
+			<label kind="synchronisation" x="25" y="-110">MoveWolf!</label>
+			<label kind="assignment" x="25" y="-76">wolf_s1 = false</label>
+			<nail x="83" y="-51"/>
+			<nail x="83" y="-93"/>
+		</transition>
+		<transition>
+			<source ref="id0"/>
+			<target ref="id1"/>
+			<label kind="guard" x="136" y="-144">goat_s1</label>
+			<label kind="synchronisation" x="136" y="-161">MoveGoat!</label>
+			<label kind="assignment" x="136" y="-127">goat_s1 = false</label>
+			<nail x="8" y="0"/>
+			<nail x="127" y="-25"/>
+			<nail x="127" y="-119"/>
+		</transition>
+	</template>
+	<template>
+		<name>Goat</name>
+		<location id="id2" x="-59" y="-59">
+			<name x="-85" y="-34">Shore1</name>
+		</location>
+		<location id="id3" x="-59" y="-144">
+			<name x="-84" y="-178">Shore2</name>
+		</location>
+		<init ref="id2"/>
+		<transition>
+			<source ref="id3"/>
+			<target ref="id2"/>
+			<label kind="synchronisation" x="-161" y="-110">MoveGoat?</label>
+			<nail x="-76" y="-102"/>
+		</transition>
+		<transition>
+			<source ref="id2"/>
+			<target ref="id3"/>
+			<label kind="synchronisation" x="-34" y="-110">MoveGoat?</label>
+			<nail x="-42" y="-102"/>
+		</transition>
+	</template>
+	<template>
+		<name>Wolf</name>
+		<location id="id4" x="0" y="0">
+			<name x="-25" y="17">Shore1</name>
+		</location>
+		<location id="id5" x="0" y="-85">
+			<name x="-10" y="-119">Shore2</name>
+		</location>
+		<init ref="id4"/>
+		<transition>
+			<source ref="id5"/>
+			<target ref="id4"/>
+			<label kind="synchronisation" x="-102" y="-51">MoveWolf?</label>
+			<nail x="-17" y="-42"/>
+		</transition>
+		<transition>
+			<source ref="id4"/>
+			<target ref="id5"/>
+			<label kind="synchronisation" x="25" y="-51">MoveWolf?</label>
+			<nail x="17" y="-42"/>
+		</transition>
+	</template>
+	<template>
+		<name>Cabbage</name>
+		<location id="id6" x="0" y="0">
+			<name x="-25" y="17">Shore1</name>
+		</location>
+		<location id="id7" x="0" y="-85">
+			<name x="-25" y="-119">Shore2</name>
+		</location>
+		<init ref="id6"/>
+		<transition>
+			<source ref="id7"/>
+			<target ref="id6"/>
+			<label kind="synchronisation" x="-136" y="-51">MoveCabbage?</label>
+			<nail x="-25" y="-42"/>
+		</transition>
+		<transition>
+			<source ref="id6"/>
+			<target ref="id7"/>
+			<label kind="synchronisation" x="34" y="-51">MoveCabbage?</label>
+			<nail x="25" y="-42"/>
+		</transition>
+	</template>
+	<system>// Place template instantiations here.
+
+// List one or more processes to be composed into a system.
+system Man, Goat, Wolf, Cabbage;
+    </system>
+	<queries>
+		<query>
+			<formula>E&lt;&gt; Man.Shore2 &amp; Goat.Shore2 &amp; Wolf.Shore2 &amp; Cabbage.Shore2</formula>
+			<comment></comment>
+		</query>
+		<query>
+			<formula>A[] !((Goat.Shore1 &amp; Wolf.Shore1 &amp; Man.Shore2) | (Goat.Shore2 &amp; Wolf.Shore2 &amp; Man.Shore1) | (Goat.Shore1 &amp; Cabbage.Shore1 &amp; Man.Shore2) | (Goat.Shore2 &amp; Cabbage.Shore2 &amp; Man.Shore1))</formula>
+			<comment></comment>
+		</query>
+	</queries>
+</nta>

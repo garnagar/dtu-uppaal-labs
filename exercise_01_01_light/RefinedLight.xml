@@ -1,0 +1,160 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE nta PUBLIC '-//Uppaal Team//DTD Flat System 1.1//EN' 'http://www.it.uu.se/research/group/darts/uppaal/flat-1_2.dtd'>
+<nta>
+	<declaration>//Insert declarations of global clocks, variables, constants and channels.
+
+chan On, Off;</declaration>
+	<template>
+		<name x="5" y="5">Controller</name>
+		<declaration>//Insert local declarations of clocks, variables and constants.
+int light_level = 0;</declaration>
+		<location id="id0" x="128" y="192">
+			<name x="72" y="152">LightOff</name>
+		</location>
+		<location id="id1" x="320" y="192">
+			<name x="340" y="187">Light20</name>
+		</location>
+		<location id="id2" x="306" y="34">
+			<name x="323" y="17">Light40</name>
+		</location>
+		<location id="id3" x="280" y="-76">
+			<name x="289" y="-102">Light60</name>
+		</location>
+		<location id="id4" x="221" y="-161">
+			<name x="238" y="-187">Light80</name>
+		</location>
+		<location id="id5" x="153" y="-221">
+			<name x="143" y="-255">Light100</name>
+		</location>
+		<init ref="id0"/>
+		<transition>
+			<source ref="id0"/>
+			<target ref="id5"/>
+			<label kind="guard" x="76" y="42">light_level == 4</label>
+			<label kind="synchronisation" x="76" y="59">On?</label>
+			<nail x="93" y="-41"/>
+		</transition>
+		<transition>
+			<source ref="id0"/>
+			<target ref="id4"/>
+			<label kind="guard" x="178" y="-42">light_level == 3</label>
+			<label kind="synchronisation" x="204" y="-25">On?</label>
+			<nail x="228" y="-53"/>
+		</transition>
+		<transition>
+			<source ref="id0"/>
+			<target ref="id3"/>
+			<label kind="guard" x="153" y="76">light_level == 2</label>
+			<label kind="synchronisation" x="153" y="93">On?</label>
+			<nail x="245" y="40"/>
+		</transition>
+		<transition>
+			<source ref="id5"/>
+			<target ref="id0"/>
+			<label kind="synchronisation" x="127" y="-59">Off?</label>
+		</transition>
+		<transition>
+			<source ref="id4"/>
+			<target ref="id0"/>
+			<label kind="synchronisation" x="161" y="0">Off?</label>
+		</transition>
+		<transition>
+			<source ref="id3"/>
+			<target ref="id0"/>
+			<label kind="synchronisation" x="187" y="51">Off?</label>
+		</transition>
+		<transition>
+			<source ref="id5"/>
+			<target ref="id1"/>
+			<label kind="synchronisation" x="144" y="-161">On?</label>
+			<label kind="assignment" x="76" y="-136">light_level = 0</label>
+		</transition>
+		<transition>
+			<source ref="id4"/>
+			<target ref="id5"/>
+			<label kind="synchronisation" x="187" y="-229">On?</label>
+			<label kind="assignment" x="195" y="-212">light_level = 4</label>
+		</transition>
+		<transition>
+			<source ref="id3"/>
+			<target ref="id4"/>
+			<label kind="synchronisation" x="255" y="-153">On?</label>
+			<label kind="assignment" x="263" y="-136">light_level = 3</label>
+		</transition>
+		<transition>
+			<source ref="id2"/>
+			<target ref="id3"/>
+			<label kind="synchronisation" x="306" y="-25">On?</label>
+			<label kind="assignment" x="306" y="-42">light_level = 2</label>
+		</transition>
+		<transition>
+			<source ref="id0"/>
+			<target ref="id2"/>
+			<label kind="guard" x="195" y="136">light_level == 1</label>
+			<label kind="synchronisation" x="238" y="119">On?</label>
+			<nail x="238" y="119"/>
+		</transition>
+		<transition>
+			<source ref="id2"/>
+			<target ref="id0"/>
+			<label kind="synchronisation" x="212" y="85">Off?</label>
+		</transition>
+		<transition>
+			<source ref="id0"/>
+			<target ref="id1"/>
+			<label kind="guard" x="170" y="195">light_level == 0</label>
+			<label kind="synchronisation" x="212" y="170">On?</label>
+		</transition>
+		<transition>
+			<source ref="id1"/>
+			<target ref="id2"/>
+			<label kind="synchronisation" x="323" y="93">On?</label>
+			<label kind="assignment" x="323" y="119">light_level = 1</label>
+		</transition>
+		<transition>
+			<source ref="id1"/>
+			<target ref="id0"/>
+			<label kind="synchronisation" x="216" y="264">Off?</label>
+			<nail x="288" y="256"/>
+			<nail x="160" y="256"/>
+		</transition>
+		<transition>
+			<source ref="id0"/>
+			<target ref="id0"/>
+			<label kind="synchronisation" x="32" y="224">Off?</label>
+			<nail x="96" y="256"/>
+			<nail x="56" y="216"/>
+		</transition>
+	</template>
+	<template>
+		<name x="5" y="5">Person</name>
+		<location id="id6" x="162" y="158">
+			<name x="184" y="144">Operate</name>
+		</location>
+		<init ref="id6"/>
+		<transition>
+			<source ref="id6"/>
+			<target ref="id6"/>
+			<label kind="synchronisation" x="152" y="72">On!</label>
+			<nail x="128" y="96"/>
+			<nail x="192" y="96"/>
+		</transition>
+		<transition>
+			<source ref="id6"/>
+			<target ref="id6"/>
+			<label kind="synchronisation" x="144" y="232">Off!</label>
+			<nail x="192" y="224"/>
+			<nail x="128" y="224"/>
+		</transition>
+	</template>
+	<system>//Insert process assignments.
+
+//Edit system definition.
+system Controller, Person;</system>
+	<queries>
+		<query>
+			<formula></formula>
+			<comment></comment>
+		</query>
+	</queries>
+</nta>
